@@ -2,6 +2,8 @@ require('dotenv').config()
 
 const express = require('express')
 const session = require('express-session')
+const fs = require('fs')
+const https = require('https')
 const next = require('next')
 
 const addFacebookOauth = require('./middlewares/oauth/facebook')
@@ -24,5 +26,9 @@ nextApp.prepare().then(() => {
 
   app.get('*', handle)
   
-  app.listen(3000)
+  https.createServer({
+    key: fs.readFileSync(__dirname + '/ssl/key.pem'),
+    cert: fs.readFileSync(__dirname + '/ssl/cert.pem'),
+    passphrase: process.env.SSL_PASSPHRASE,
+  }, app).listen(3000)
 })
