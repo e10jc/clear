@@ -8,6 +8,7 @@ class App extends NextApp {
     return {
       componentProps: Component.getInitialProps ? await Component.getInitialProps(ctx) : {},
       sessionDataProps: {
+        facebookUser: ctx.req ? ctx.req.session.facebookUser : {},
         twitterUser: ctx.req ? ctx.req.session.twitterUser : {},
       },
     }
