@@ -1,11 +1,6 @@
-require('dotenv').config()
+const {OAuth} = require('oauth')
 
-const express = require('express')
-const session = require('express-session')
-const next = require('next')
-const OAuth = require('oauth')
-
-const twitterOauthConsumer = new OAuth.OAuth(
+const consumer = new OAuth(
   'https://twitter.com/oauth/request_token', 
   'https://twitter.com/oauth/access_token', 
   process.env.TWITTER_API_KEY,
@@ -15,20 +10,9 @@ const twitterOauthConsumer = new OAuth.OAuth(
   'HMAC-SHA1'
 )
 
-const nextApp = next({dev: process.env.NODE_ENV !== 'production'})
-const handle = nextApp.getRequestHandler()
-
-nextApp.prepare().then(() => {
-  const app = express()
-
-  app.use(session({
-    resave: false,
-    saveUninitialized: false,
-    secret: process.env.SESSION_SECRET,
-  }))
-
+module.exports = app => {
   app.get('/oauth/twitter/connect', async (req, res) => {
-    twitterOauthConsumer.getOAuthRequestToken((error, token, secret) => {
+    consumer.getOAuthRequestToken((error, token, secret) => {
       if (error) return res.send('Error')
       req.session.twitterToken = token
       req.session.twitterSecret = secret
@@ -37,7 +21,7 @@ nextApp.prepare().then(() => {
   })
   
   app.get('/oauth/twitter/callback', (req, res) => {
-    twitterOauthConsumer.getOAuthAccessToken(
+    consumer.getOAuthAccessToken(
       req.session.twitterToken, 
       req.session.twitterSecret,
       req.query.oauth_verifier,
@@ -45,7 +29,7 @@ nextApp.prepare().then(() => {
         if (error) return res.send('Error')
         req.session.twitterToken = token
         req.session.twitterSecret = secret
-        twitterOauthConsumer.get(
+        consumer.get(
           'https://api.twitter.com/1.1/account/verify_credentials.json', 
           req.session.twitterToken, 
           req.session.twitterSecret,
@@ -57,8 +41,4 @@ nextApp.prepare().then(() => {
       }
     )
   })
-
-  app.get('*', handle)
-  
-  app.listen(3000)
-})
+}
