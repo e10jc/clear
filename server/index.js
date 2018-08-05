@@ -26,9 +26,13 @@ nextApp.prepare().then(() => {
 
   app.get('*', handle)
   
-  https.createServer({
-    key: fs.readFileSync(__dirname + '/ssl/key.pem'),
-    cert: fs.readFileSync(__dirname + '/ssl/cert.pem'),
-    passphrase: process.env.SSL_PASSPHRASE,
-  }, app).listen(3000)
+  if (process.env.USE_LOCAL_SSL) {
+    https.createServer({
+      key: fs.readFileSync(__dirname + '/ssl/key.pem'),
+      cert: fs.readFileSync(__dirname + '/ssl/cert.pem'),
+      passphrase: process.env.SSL_PASSPHRASE,
+    }, app).listen(3000)
+  } else {
+    app.listen(3000)
+  }
 })
