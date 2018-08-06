@@ -1,8 +1,8 @@
 import * as express from 'express'
 import * as session from 'express-session'
 import {readFileSync} from 'fs'
-import {createServer} from 'https'
 import * as next from 'next'
+import {createServer} from 'spdy'
 
 import addFacebookOauth from './middlewares/oauth/facebook'
 import addInstagramOauth from './middlewares/oauth/instagram'
