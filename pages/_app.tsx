@@ -4,6 +4,7 @@ import * as React from 'react'
 export const SessionDataContext = React.createContext({
   facebookUser: null,
   instagramUser: null,
+  redditUser: null,
   twitterUser: null,
 })
 
@@ -23,6 +24,7 @@ class App extends NextApp<Props> {
       sessionDataProps: {
         facebookUser: ctx.req ? ctx.req.session.facebookUser : {},
         instagramUser: ctx.req ? ctx.req.session.instagramUser : {},
+        redditUser: ctx.req ? ctx.req.session.redditUser : {},
         twitterUser: ctx.req ? ctx.req.session.twitterUser : {},
       },
     }

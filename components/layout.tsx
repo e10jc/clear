@@ -3,7 +3,7 @@ import Link from 'next/link'
 import {SessionDataContext} from '../pages/_app'
 
 export default ({children}) => <SessionDataContext.Consumer>
-  {({facebookUser, instagramUser, twitterUser}) => <div>
+  {({facebookUser, instagramUser, redditUser, twitterUser}) => <div>
     <h1>
       <Link href='/'><a>Clear</a></Link>
     </h1>
@@ -11,9 +11,10 @@ export default ({children}) => <SessionDataContext.Consumer>
     {children}
 
     <ul>
-      <li>Twitter user: {twitterUser && twitterUser.id}</li>
-      <li>Instagram user: {instagramUser && instagramUser.id}</li>
       <li>Facebook user: {facebookUser && facebookUser.id}</li>
+      <li>Instagram user: {instagramUser && instagramUser.id}</li>
+      <li>Twitter user: {twitterUser && twitterUser.id}</li>
+      <li>Reddit user: {redditUser && redditUser.id}</li>
     </ul>
 
     <ul>

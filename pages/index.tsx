@@ -11,6 +11,9 @@ const HomePage = () => <Layout>
     <li>
       <a href='/oauth/twitter/connect'>Twitter connect</a>
     </li>
+    <li>
+      <a href='/oauth/reddit/connect'>Reddit connect</a>
+    </li>
   </ul>
 </Layout>
 

@@ -6,6 +6,7 @@ import * as next from 'next'
 
 import addFacebookOauth from './middlewares/oauth/facebook'
 import addInstagramOauth from './middlewares/oauth/instagram'
+import addRedditOauth from './middlewares/oauth/reddit'
 import addTwitterOauth from './middlewares/oauth/twitter'
 
 const nextApp = next({dev: process.env.NODE_ENV !== 'production'})
@@ -22,6 +23,7 @@ nextApp.prepare().then(() => {
 
   addFacebookOauth(app)
   addInstagramOauth(app)
+  addRedditOauth(app)
   addTwitterOauth(app)
 
   app.get('*', handle)
