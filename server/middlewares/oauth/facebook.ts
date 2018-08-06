@@ -1,14 +1,14 @@
-const {OAuth2} = require('oauth')
+import {OAuth2} from 'oauth'
 
 const STATE = 'd29n'
 
-const consumer = new OAuth2(
-  process.env.FACEBOOK_APP_ID,
-  process.env.FACEBOOK_APP_SECRET,
-  'https://graph.facebook.com',
-)
+export default app => {
+  const consumer = new OAuth2(
+    process.env.FACEBOOK_APP_ID,
+    process.env.FACEBOOK_APP_SECRET,
+    'https://graph.facebook.com',
+  )
 
-module.exports = app => {
   app.get('/oauth/facebook/connect', async (req, res) => {
     const appId = process.env.FACEBOOK_APP_ID
     const url = process.env.FACEBOOK_REDIRECT_URL

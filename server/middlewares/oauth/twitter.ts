@@ -1,16 +1,16 @@
-const {OAuth} = require('oauth')
+import {OAuth} from 'oauth'
 
-const consumer = new OAuth(
-  'https://twitter.com/oauth/request_token', 
-  'https://twitter.com/oauth/access_token', 
-  process.env.TWITTER_API_KEY,
-  process.env.TWITTER_API_SECRET,
-  '1.0A',
-  process.env.TWITTER_CALLBACK_URL,
-  'HMAC-SHA1'
-)
+export default app => {
+  const consumer = new OAuth(
+    'https://twitter.com/oauth/request_token', 
+    'https://twitter.com/oauth/access_token', 
+    process.env.TWITTER_API_KEY,
+    process.env.TWITTER_API_SECRET,
+    '1.0A',
+    process.env.TWITTER_CALLBACK_URL,
+    'HMAC-SHA1'
+  )
 
-module.exports = app => {
   app.get('/oauth/twitter/connect', async (req, res) => {
     consumer.getOAuthRequestToken((error, token, secret) => {
       if (error) return res.send('Error')

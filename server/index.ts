@@ -1,13 +1,11 @@
-require('dotenv').config()
+import * as express from 'express'
+import * as session from 'express-session'
+import {readFileSync} from 'fs'
+import {createServer} from 'https'
+import * as next from 'next'
 
-const express = require('express')
-const session = require('express-session')
-const fs = require('fs')
-const https = require('https')
-const next = require('next')
-
-const addFacebookOauth = require('./middlewares/oauth/facebook')
-const addTwitterOauth = require('./middlewares/oauth/twitter')
+import addFacebookOauth from './middlewares/oauth/facebook'
+import addTwitterOauth from './middlewares/oauth/twitter'
 
 const nextApp = next({dev: process.env.NODE_ENV !== 'production'})
 const handle = nextApp.getRequestHandler()
@@ -27,9 +25,9 @@ nextApp.prepare().then(() => {
   app.get('*', handle)
   
   if (process.env.USE_LOCAL_SSL) {
-    https.createServer({
-      key: fs.readFileSync(__dirname + '/ssl/key.pem'),
-      cert: fs.readFileSync(__dirname + '/ssl/cert.pem'),
+    createServer({
+      key: readFileSync(__dirname + '/ssl/key.pem'),
+      cert: readFileSync(__dirname + '/ssl/cert.pem'),
       passphrase: process.env.SSL_PASSPHRASE,
     }, app).listen(3000)
   } else {
