@@ -3,6 +3,7 @@ import * as React from 'react'
 
 export const SessionDataContext = React.createContext({
   facebookUser: null,
+  instagramUser: null,
   twitterUser: null,
 })
 
@@ -21,6 +22,7 @@ class App extends NextApp<Props> {
       componentProps: Component.getInitialProps ? await Component.getInitialProps(ctx) : {},
       sessionDataProps: {
         facebookUser: ctx.req ? ctx.req.session.facebookUser : {},
+        instagramUser: ctx.req ? ctx.req.session.instagramUser : {},
         twitterUser: ctx.req ? ctx.req.session.twitterUser : {},
       },
     }

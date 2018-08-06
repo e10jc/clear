@@ -6,6 +6,9 @@ const HomePage = () => <Layout>
       <a href='/oauth/facebook/connect'>Facebook connect</a>
     </li>
     <li>
+      <a href='/oauth/Instagram/connect'>Instagram connect</a>
+    </li>
+    <li>
       <a href='/oauth/twitter/connect'>Twitter connect</a>
     </li>
   </ul>
