@@ -6,8 +6,8 @@
   "scripts": {
     "test": "jest",
     "dev": "nodemon -r dotenv/config server/index.ts",
-    "build": "next build",
-    "start": "node server/index.js"
+    "build": "next build && tsc --project tsconfig.server.json",
+    "start": "node .next/production-server/index.js"
   },
   "author": "",
   "license": "ISC",
