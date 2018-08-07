@@ -1,5 +1,6 @@
 import NextApp, {Container} from 'next/app'
 import * as React from 'react'
+import * as io from 'socket.io-client'
 
 export const SessionDataContext = React.createContext({
   facebookUser: null,
@@ -8,16 +9,14 @@ export const SessionDataContext = React.createContext({
   twitterUser: null,
 })
 
+export const SocketContext = React.createContext(null)
+
 interface Props {
   componentProps: any,
   sessionDataProps: any,
 }
 
 class App extends NextApp<Props> {
-  state = {
-    sessionDataProps: this.props.sessionDataProps,
-  }
-
   static async getInitialProps ({Component, ctx}) {
     return {
       componentProps: Component.getInitialProps ? await Component.getInitialProps(ctx) : {},
@@ -30,11 +29,27 @@ class App extends NextApp<Props> {
     }
   }
 
+  state = {
+    sessionDataProps: this.props.sessionDataProps,
+    socket: null,
+  }
+
+  componentDidMount () {
+    const socket = io()
+    this.setState({...this.state, socket})
+  }
+
+  componentWillUnmount () {
+    this.state.socket.close()
+  }
+
   render () {
     const {Component, componentProps} = this.props
     return <Container>
       <SessionDataContext.Provider value={this.state.sessionDataProps}>
-        <Component {...componentProps} />
+        <SocketContext.Provider value={this.state.socket}>
+          <Component {...componentProps} />
+        </SocketContext.Provider>
       </SessionDataContext.Provider>
     </Container>
   }

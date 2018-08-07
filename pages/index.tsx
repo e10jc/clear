@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import Layout from '../components/layout'
 
 const HomePage = () => <Layout>
@@ -13,6 +15,12 @@ const HomePage = () => <Layout>
     </li>
     <li>
       <a href='/oauth/reddit/connect'>Reddit connect</a>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <Link href='/content/instagram'><a>Instagram content</a></Link>
     </li>
   </ul>
 </Layout>
