@@ -1,5 +1,3 @@
-import Link from 'next/link'
-
 import Layout from '../components/layout'
 
 const HomePage = () => <Layout>
@@ -20,7 +18,7 @@ const HomePage = () => <Layout>
 
   <ul>
     <li>
-      <Link href='/content/instagram'><a>Instagram content</a></Link>
+      <a href='/content/instagram'>Instagram content</a>
     </li>
   </ul>
 </Layout>

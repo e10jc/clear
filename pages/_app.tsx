@@ -35,8 +35,7 @@ class App extends NextApp<Props> {
   }
 
   componentDidMount () {
-    const socket = io()
-    this.setState({...this.state, socket})
+    this.setState({...this.state, socket: io()})
   }
 
   componentWillUnmount () {
