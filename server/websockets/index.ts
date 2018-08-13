@@ -1,7 +1,7 @@
 import * as addSession from 'express-socket.io-session'
 import * as Io from 'socket.io'
 
-import InstagramScraper from '../scrapers/instagram'
+import scraper from '../lib/scraper'
 
 export default (server, {session}) => {
   const io = Io(server)
@@ -10,11 +10,12 @@ export default (server, {session}) => {
 
   io.on('connection', socket => {
     socket.on('begin scrape instagram', async () => {
-      const instagramScraper = new InstagramScraper(socket.handshake.session.instagramToken)
-
-      // while (instagramScraper.canScrape) {
-        socket.emit('scraped instagram', await instagramScraper.scrape())
-      // }
+        socket.emit('scraped instagram', await scraper(
+          'https://www.instagram.com/e10jc/',
+          {
+            
+          }
+        ))
     })
 
     socket.on('disconnect', () => {
